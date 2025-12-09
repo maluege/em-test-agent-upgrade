@@ -41,7 +41,7 @@
                         }
                         <li class="nav-item dropdown">
                              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                 <i class="bi bi-person"></i> &nbsp; @(string.IsNullOrWhiteSpace(User.Identity?.Name) ? "Account" : User.Identity.Name)
+                                 <i class="bi bi-person"></i> &nbsp; @(string.IsNullOrWhiteSpace(User.Identity?.Name) ? "Account" : User.Identity?.Name)
                              </a>
                              <div class="dropdown-menu">
                                  @{
