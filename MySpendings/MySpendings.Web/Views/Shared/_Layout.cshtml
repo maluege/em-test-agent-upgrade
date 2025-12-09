@@ -26,7 +26,7 @@
                             <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="bi bi-graph-up"></i> &nbsp; Statistics</a>
                         </li>
                         @{
-                            if (!string.IsNullOrWhiteSpace(User.Identity.Name))
+                            if (!string.IsNullOrWhiteSpace(User.Identity?.Name))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -41,11 +41,11 @@
                         }
                         <li class="nav-item dropdown">
                              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                 <i class="bi bi-person"></i> &nbsp; @(string.IsNullOrWhiteSpace(User.Identity.Name) ? "Account" : User.Identity.Name)
+                                 <i class="bi bi-person"></i> &nbsp; @(string.IsNullOrWhiteSpace(User.Identity?.Name) ? "Account" : User.Identity?.Name)
                              </a>
                              <div class="dropdown-menu">
                                  @{
-                                     if (string.IsNullOrWhiteSpace(User.Identity.Name))
+                                     if (string.IsNullOrWhiteSpace(User.Identity?.Name))
                                      {
                                         <a class="dropdown-item" asp-controller="Account" asp-action="Login"><i class="bi bi-person-check-fill"></i> &nbsp; Sign in</a>
                                         <a class="dropdown-item" asp-controller="Account" asp-action="Register"><i class="bi bi-person-plus-fill"></i> &nbsp; Sign up</a>

@@ -25,6 +25,9 @@ namespace MySpendings.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Upsert(int? id)
         {
+            if (User.Identity?.Name == null)
+                return RedirectToAction("Login", controllerName: "Account");
+
             var currentUser = await _unitOfWork.User
                 .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
             if (currentUser == null)
@@ -53,6 +56,9 @@ namespace MySpendings.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(OutlayViewModel outlayViewModel)
         {
+            if (User.Identity?.Name == null)
+                return RedirectToAction("Login", controllerName: "Account");
+
             var currentUser = await _unitOfWork.User
                 .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
             if (currentUser == null)
@@ -123,6 +129,9 @@ namespace MySpendings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            if (User.Identity?.Name == null)
+                return RedirectToAction("Login", controllerName: "Account");
+
             var currentUser = await _unitOfWork.User
                 .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
 
