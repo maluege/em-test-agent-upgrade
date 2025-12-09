@@ -88,6 +88,9 @@ namespace MySpendings.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Settings()
         {
+            if (User.Identity?.Name == null)
+                return RedirectToAction("Login", controllerName: "Account");
+
             var currentUser = await _unitOfWork.User
                .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
 
