@@ -8,7 +8,7 @@ namespace MySpendings.Models.ViewModels
         public int CategoryId { get; set; }
 
         [ValidateNever]
-        public string CategoryName { get; set; }
+        public required string CategoryName { get; set; }
 
         [ValidateNever]
         public bool IsActive { get; set; }

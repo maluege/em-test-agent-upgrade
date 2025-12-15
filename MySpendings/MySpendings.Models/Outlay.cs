@@ -6,7 +6,7 @@ namespace MySpendings.Models
     public class Outlay
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Range(0, 1000000)]
         public float Cost { get; set; }
@@ -19,6 +19,6 @@ namespace MySpendings.Models
         public int CategoryId { get; set; }
 
         [ValidateNever]
-        public Category Category { get; set; }
+        public Category Category { get; set; } = null!;
     }
 }

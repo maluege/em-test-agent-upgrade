@@ -25,7 +25,7 @@ namespace MySpendings.Web.Controllers
         {
             if (id == null || id == 0)
             {
-                var category = new Category();
+                var category = new Category() { Name = string.Empty };
                 return View(category);
             }
             else
@@ -44,7 +44,7 @@ namespace MySpendings.Web.Controllers
             if (ModelState.IsValid)
             {
                 var currentUser = await _unitOfWork.User
-                    .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
+                    .GetFirstOrDefaultAsync(u => u.Login == User.Identity!.Name);
                 if (currentUser == null)
                     return RedirectToAction("Login", controllerName: "Account");
 
@@ -85,7 +85,7 @@ namespace MySpendings.Web.Controllers
         public async Task<IActionResult> GetAll()
         {
             var currentUser = await _unitOfWork.User
-                .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
+                .GetFirstOrDefaultAsync(u => u.Login == User.Identity!.Name);
             if (currentUser == null)
                 return RedirectToAction("Login", controllerName: "Account");
 

@@ -9,6 +9,6 @@ namespace MySpendings.DataAccess.Repository.IRepository
         Task AddAsync(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
-        Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter, string? includeProperties = null);
+        Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter, string? includeProperties = null);
     }
 }

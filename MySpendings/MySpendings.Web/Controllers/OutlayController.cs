@@ -26,13 +26,16 @@ namespace MySpendings.Web.Controllers
         public async Task<IActionResult> Upsert(int? id)
         {
             var currentUser = await _unitOfWork.User
-                .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
+                .GetFirstOrDefaultAsync(u => u.Login == User.Identity!.Name);
             if (currentUser == null)
                 return RedirectToAction("Login", controllerName: "Account");
 
             var outlayViewModel = new OutlayViewModel()
             {
-                Outlay = new Outlay() { CreatedDate = DateTimeOffset.Now }
+                Outlay = new Outlay() { Name = string.Empty, CreatedDate = DateTimeOffset.Now },
+                MinDate = string.Empty,
+                MaxDate = string.Empty,
+                Categories = Enumerable.Empty<SelectListItem>()
             };
 
             UpdateMinMaxDate(outlayViewModel);
@@ -42,8 +45,10 @@ namespace MySpendings.Web.Controllers
                 return View(outlayViewModel);
             else
             {
-                outlayViewModel.Outlay = await _unitOfWork.Outlay
+                var outlay = await _unitOfWork.Outlay
                     .GetFirstOrDefaultAsync(c => c.Id == id);
+                if (outlay != null)
+                    outlayViewModel.Outlay = outlay;
                 return View(outlayViewModel);
             }
         }
@@ -54,7 +59,7 @@ namespace MySpendings.Web.Controllers
         public async Task<IActionResult> Upsert(OutlayViewModel outlayViewModel)
         {
             var currentUser = await _unitOfWork.User
-                .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
+                .GetFirstOrDefaultAsync(u => u.Login == User.Identity!.Name);
             if (currentUser == null)
                 return RedirectToAction("Login", controllerName: "Account");
 
@@ -124,7 +129,7 @@ namespace MySpendings.Web.Controllers
         public async Task<IActionResult> GetAll()
         {
             var currentUser = await _unitOfWork.User
-                .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
+                .GetFirstOrDefaultAsync(u => u.Login == User.Identity!.Name);
 
             if (currentUser == null)
                 return RedirectToAction("Login", controllerName: "Account");
@@ -134,7 +139,11 @@ namespace MySpendings.Web.Controllers
 
             List<Outlay> outlays = new List<Outlay>();
             foreach (var userOutlay in userOutlays)
-                outlays.Add(await _unitOfWork.Outlay.GetFirstOrDefaultAsync(c => c.Id == userOutlay.OutlayId, includeProperties: "Category"));
+            {
+                var outlay = await _unitOfWork.Outlay.GetFirstOrDefaultAsync(c => c.Id == userOutlay.OutlayId, includeProperties: "Category");
+                if (outlay != null)
+                    outlays.Add(outlay);
+            }
             return Json(new { data = outlays });
         }
         #endregion

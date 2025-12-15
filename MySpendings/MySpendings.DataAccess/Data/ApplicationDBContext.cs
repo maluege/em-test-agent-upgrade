@@ -11,11 +11,11 @@ namespace MySpendings.DataAccess.Data
             Database.EnsureCreated();
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Outlay> Outlays { get; set; }
-        public DbSet<UserCategory> UserCategories { get; set; }
-        public DbSet<UserOutlay> UserOutlays { get; set; }
+        public required DbSet<User> Users { get; set; }
+        public required DbSet<Category> Categories { get; set; }
+        public required DbSet<Outlay> Outlays { get; set; }
+        public required DbSet<UserCategory> UserCategories { get; set; }
+        public required DbSet<UserOutlay> UserOutlays { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -5,15 +5,15 @@ namespace MySpendings.Models.ViewModels
 {
     public class OutlayViewModel
     {
-        public Outlay Outlay { get; set; }
+        public required Outlay Outlay { get; set; }
 
         [ValidateNever]
-        public string MinDate { get; set; }
+        public required string MinDate { get; set; }
 
         [ValidateNever]
-        public string MaxDate { get; set; }
+        public required string MaxDate { get; set; }
 
         [ValidateNever]
-        public IEnumerable<SelectListItem> Categories { get; set; }
+        public required IEnumerable<SelectListItem> Categories { get; set; }
     }
 }
