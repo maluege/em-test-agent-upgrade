@@ -43,6 +43,9 @@ namespace MySpendings.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (User.Identity?.Name == null)
+                    return RedirectToAction("Login", controllerName: "Account");
+
                 var currentUser = await _unitOfWork.User
                     .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
                 if (currentUser == null)
@@ -84,6 +87,9 @@ namespace MySpendings.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            if (User.Identity?.Name == null)
+                return RedirectToAction("Login", controllerName: "Account");
+
             var currentUser = await _unitOfWork.User
                 .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
             if (currentUser == null)
