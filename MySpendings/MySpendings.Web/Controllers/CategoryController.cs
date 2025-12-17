@@ -41,11 +41,11 @@ namespace MySpendings.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(Category category)
         {
+            if (User.Identity?.Name == null)
+                return RedirectToAction("Login", controllerName: "Account");
+
             if (ModelState.IsValid)
             {
-                if (User.Identity?.Name == null)
-                    return RedirectToAction("Login", controllerName: "Account");
-
                 var currentUser = await _unitOfWork.User
                     .GetFirstOrDefaultAsync(u => u.Login == User.Identity.Name);
                 if (currentUser == null)
